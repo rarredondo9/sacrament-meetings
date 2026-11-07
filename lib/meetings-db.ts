@@ -110,6 +110,22 @@ const meetings: SacramentMeeting[] = [
         closingHymn: { number: 116, title: 'Come, Follow Me' },
         closingPrayer: 'Sister Nelson',
     },
+    {
+        id: 7,
+        date: '2026-11-01',
+        meetingType: 'testimony',
+        presiding: 'Bishop Smith',
+        conducting: 'Brother Garcia',
+        announcements: ['Fast offerings can be given to a member of the bishopric'],
+        openingHymn: { number: 85, title: 'How Firm a Foundation' },
+        openingPrayer: 'Sister Rivera',
+        wardBusiness: [],
+        stakeBusiness: false,
+        sacramentHymn: { number: 169, title: 'As Now We Take the Sacrament' },
+        speakers: [],
+        closingHymn: { number: 152, title: 'God Be with You Till We Meet Again' },
+        closingPrayer: 'Brother Ortiz',
+    },
 ];
 
 export function getMeetings(date?: string | null): SacramentMeeting[] {
