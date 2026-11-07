@@ -12,7 +12,9 @@ export default function Header() {
                         <CurrentDate />
                     </Suspense>
                 </div>
-                <NavLinks />
+                <Suspense fallback={<div className='h-8' aria-hidden='true' />}>
+                    <NavLinks />
+                </Suspense>
             </div>
         </header>
     );
