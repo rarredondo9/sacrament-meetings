@@ -16,7 +16,7 @@ function hymnText(hymn: Hymn): string {
 
 function ProgramItem({ label, value }: ProgramItemProps) {
     return (
-        <div className="flex flex-col ga-1 border-b border-brand-light py-3 sm:flex-row sm:justify-between">
+        <div className="flex flex-col gap-1 border-b border-brand-light py-3 sm:flex-row sm:justify-between">
             <dt className="font-semibold">{label}</dt>
             <dd className="text-muted sm:text-right">{value}</dd>
         </div>
@@ -89,7 +89,7 @@ export default function MeetingDetail({ meeting }: MeetingDetailProps) {
                             <span className="font-semibold">
                                 {item.type === 'musical-number' ? 'Musical Number' : 'Speaker'}: {item.name}
                             </span>
-                            <span className="text-mutes">{item.topic}</span>
+                            <span className="text-muted">{item.topic}</span>
                         </li>
                         ))}
                     </ol>

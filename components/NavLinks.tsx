@@ -20,7 +20,7 @@ export default function NavLinks() {
                         link.href === '/'
                             ? pathname === '/'
                             : link.href === '/meetings'
-                                ? pathname.startsWith('/meetings')
+                                ? pathname === '/meetings' || /^\/meetings\/\d+$/.test(pathname)
                                 : pathname === link.href;
 
                 return (
