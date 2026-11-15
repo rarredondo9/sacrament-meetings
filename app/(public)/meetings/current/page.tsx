@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
-import { getMeetings } from "@/lib/meetings-db";
+import { getMeetingsByDate } from "@/lib/meetings-db";
 
 function getMostRecentSunday(): string {
     const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Phoenix' });
@@ -15,7 +15,7 @@ export default async function CurrentMeetingPage() {
     await connection();
 
     const sunday = getMostRecentSunday();
-    const [meeting] = getMeetings(sunday);
+    const [meeting] = await getMeetingsByDate(sunday);
 
     if (meeting) {
         redirect(`/meetings/${meeting.id}`);

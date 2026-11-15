@@ -7,22 +7,25 @@ interface ErrorResponse {
 }
 
 export async function GET(
-    _request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
-): Promise<NextResponse<SacramentMeeting | ErrorResponse>> {
+        _request: NextRequest,
+        { params }: { params: Promise<{ id: string }> }
+    ): Promise<NextResponse<SacramentMeeting | ErrorResponse>> {
+        const { id } = await params;
+        const meetingId = Number(id);
 
-    const { id } = await params;
-    const meetingId = Number(id);
+        if (!Number.isInteger(meetingId) || meetingId < 1) {
+            return NextResponse.json({ error: 'Invalid Meeting Id' }, { status: 400 });
+        }
 
-    if (!Number.isInteger(meetingId) || meetingId < 1) {
-        return NextResponse.json({ error: 'Invalid Meeting Id' }, { status: 400 });
+        try {
+        const meeting = await getMeetingById(meetingId);
+
+        if (!meeting) {
+            return NextResponse.json({ error: 'Meeting not found'}, { status: 404 });
+        }
+
+        return NextResponse.json(meeting);
+    } catch { 
+        return NextResponse.json({ error: 'Could not load meeting.'}, { status: 500});
     }
-
-    const meeting = getMeetingById(meetingId);
-
-    if (!meeting) {
-        return NextResponse.json({ error: 'Meeting not found'}, { status: 404 });
-    }
-
-    return NextResponse.json(meeting);
 }
