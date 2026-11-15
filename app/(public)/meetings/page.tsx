@@ -4,7 +4,7 @@ import Pagination from "@/components/Pagination";
 import { getMeetings, getMeetingsTotalPages } from "@/lib/meetings-db";
 
 export default async function MeetingsPage(props: {
-    searchParams?: Promise<{ wuery?: string; page?: string }>;
+    searchParams?: Promise<{ query?: string; page?: string }>;
 }) {
     const searchParams = await props.searchParams;
 
