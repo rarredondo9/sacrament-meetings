@@ -131,7 +131,7 @@ export async function addMeeting(data: MeetingInput): Promise<void> {
     ) VALUES (
      ${data.date}, ${data.meetingType}, ${data.presiding}, ${data.conducting}, ${data.announcements ?? []},
      ${JSON.stringify(data.openingHymn)}::jsonb, ${data.openingPrayer}, ${JSON.stringify(data.wardBusiness)}::jsonb, 
-     ${data.stakeBusiness}, ${JSON.stringify(data.sacramentHymn)})::jsonb, ${JSON.stringify(data.speakers)}::jsonb,
+     ${data.stakeBusiness}, ${JSON.stringify(data.sacramentHymn)}::jsonb, ${JSON.stringify(data.speakers)}::jsonb,
      ${JSON.stringify(data.closingHymn)}::jsonb, ${data.closingPrayer})
      `;
 }

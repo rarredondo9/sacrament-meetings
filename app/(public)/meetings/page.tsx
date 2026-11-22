@@ -2,6 +2,7 @@ import MeetingCard from "@/components/MeetingCard";
 import MeetingSearch from "@/components/MeetingSearch";
 import Pagination from "@/components/Pagination";
 import { getMeetings, getMeetingsTotalPages } from "@/lib/meetings-db";
+import Link from "next/link";
 
 export default async function MeetingsPage(props: {
     searchParams?: Promise<{ query?: string; page?: string }>;
@@ -21,7 +22,12 @@ export default async function MeetingsPage(props: {
         return (
             <section>
                 <h1 className="mb-6 text=3xl font-bold text-brand"> Sacrament Meeting Programs</h1>
-
+                <Link 
+                    href="/meetings/new"
+                    className="mb-6 inline-block rounded-md bg-brand px-4 py-2 font-semibold text-white hover:opacity-90"
+                >
+                    + Plan a Meeting
+                </Link>
                 <MeetingSearch />
 
                 {meetings.length === 0 ? (

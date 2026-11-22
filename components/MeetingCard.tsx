@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { SacramentMeeting } from "@/lib/types";
 import { formatMeetingDate, meetingTypeLabels } from "@/lib/format";
+import { deleteMeeting } from "@/lib/actions";
 
 interface MeetingCardProps {
     meeting: SacramentMeeting
@@ -28,6 +29,23 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
                 View Program
                 <span className="sr-only"> for {formatMeetingDate(meeting.date)}</span>
             </Link>
+
+            <div className="mt-4 flex gap-3">
+                <Link
+                    href={`/meetings/${meeting.id}/edit`}
+                    className="rounded-md border border-brand px-3 py-1 text-sm font-semibold text-brand hover:bg-brand-light"
+                >
+                    Edit<span className="sr-only"> meeting on {formatMeetingDate(meeting.date)}</span>
+                </Link>
+                <form action={deleteMeeting.bind(null, meeting.id)}>
+                    <button 
+                        type="submit"
+                        className="rounded-md border border-red-700 px-3 py-1 text-sm font-semibold text-red-700 hover:bg-red-50"
+                    >
+                        Delete<span className="sr-only"> meeting on {formatMeetingDate(meeting.date)}</span>
+                    </button>
+                </form>
+            </div>
         </article>
     );
 }

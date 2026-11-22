@@ -1,10 +1,11 @@
+import MeetingForm from "@/components/MeetingForm";
+import { createMeeting } from "@/lib/actions";
+
 export default function CreateMeetingPage() {
     return (
         <section>
-            <h1 className="text-3xl font-bold text-brand">Create Meeting- Coming in Week 04</h1>
-            <p className="mt-4 text-muted">
-                The form for planning a new meeting will be added next week.
-            </p>
+            <h1 className="mb-6 text-3xl font-bold text-brand">Plan a New Meeting</h1>
+            <MeetingForm action={createMeeting} submitLabel="Create Meeting" />
         </section>
     );
 }
