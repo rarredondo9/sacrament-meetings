@@ -10,8 +10,12 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: 'Sacrament Meeting Planner',
-  description: 'Plan, view, and print sacrament meeting programs.',
+  title: {
+    default: 'Sacreament Meeting Planner | Atherton Ward',
+    template: '%s | Atherton Ward'
+  },
+  description: 'Plan, view, and print sacrament meeting programs for Atherton Ward.',
+  metadataBase: new URL('https://sacrament-meetings-blush.vercel.app/'),
 };
 
 export default function RootLayout({

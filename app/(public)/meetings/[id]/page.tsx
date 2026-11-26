@@ -3,6 +3,27 @@ import MeetingDetail from "@/components/MeetingDetail";
 import PrintButton from "@/components/PrintButton";
 import { getBaseUrl } from "@/lib/api";
 import type { SacramentMeeting } from "@/lib/types";
+import { Metadata } from "next";
+import { getMeetingById } from "@/lib/meetings-db";
+import { formatMeetingDate, meetingTypeLabels } from "@/lib/format";
+
+export async function generateMetadata(props: {
+    params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+    const { id } = await props.params;
+    const meetingId = Number(id);
+    const meeting = Number.isInteger(meetingId) && meetingId > 0 ? await getMeetingById(meetingId) : null;
+
+    if (!meeting) {
+        return { title: 'Meeting Not Found' };
+    }
+
+    const date = formatMeetingDate(meeting.date);
+    return { 
+        title: `${meetingTypeLabels[meeting.meetingType]}, ${date}`,
+        description: `Program for the ${meetingTypeLabels[meeting.meetingType].toLowerCase()} on ${date}.`,
+    };
+}
 
 export default async function MeetingPage({
     params,

@@ -5,6 +5,16 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as db from '@/lib/meetings-db';
 import type { SpeakerItem } from "@/lib/types";
+import { auth, signIn } from "@/auth";
+import { AuthError } from "next-auth";
+
+async function requireLeaderSession() {
+    const session = await auth();
+    if (!session?.user) {
+        throw new Error('Not authenticated');
+    }
+    return session;
+}
 
 function lines(text: string): string[] {
     return text
@@ -161,6 +171,9 @@ export async function createMeeting(
     prevState: MeetingFormState,
     formData: FormData
 ): Promise<MeetingFormState> {
+
+    await requireLeaderSession();
+    
     const result = validateMeetingForm(formData);
     if (!result.ok) return result.state;
 
@@ -187,6 +200,9 @@ export async function updateMeeting(
     prevState: MeetingFormState, 
     formData: FormData
 ): Promise<MeetingFormState> {
+
+    await requireLeaderSession();
+
     const meetingId = toMeetingId(id);
     const result = validateMeetingForm(formData);
     if (!result.ok) return result.state;
@@ -216,6 +232,8 @@ export async function updateMeeting(
 }
 
 export async function deleteMeeting(id: number): Promise<void> {
+    await requireLeaderSession();
+    
     const meetingId = toMeetingId(id);
 
     try {
@@ -226,4 +244,24 @@ export async function deleteMeeting(id: number): Promise<void> {
     }
 
     revalidatePath('/meetings');
+}
+
+export async function authenticate(
+    prevState: string | undefined,
+    formData: FormData
+): Promise<string | undefined> {
+    try {
+        await signIn('credentials', {
+            email: formData.get('email'),
+            password: formData.get('password'),
+            redirectTo: '/meetings',
+        });
+    }catch (error) {
+        if (error instanceof AuthError) {
+            return error.type === 'CredentialsSignin'
+            ? 'Invalid email or password.'
+            : 'Something went wrong.';
+        }
+        throw error;
+    }
 }

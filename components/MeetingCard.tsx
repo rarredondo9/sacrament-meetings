@@ -5,9 +5,10 @@ import { deleteMeeting } from "@/lib/actions";
 
 interface MeetingCardProps {
     meeting: SacramentMeeting
+    canEdit?: boolean;
 }
 
-export default function MeetingCard({ meeting }: MeetingCardProps) {
+export default function MeetingCard({ meeting, canEdit }: MeetingCardProps) {
     const speakerCount = meeting.speakers.filter((item) => item.type === 'speaker').length;
 
     return (
@@ -30,6 +31,7 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
                 <span className="sr-only"> for {formatMeetingDate(meeting.date)}</span>
             </Link>
 
+            {canEdit && (      
             <div className="mt-4 flex gap-3">
                 <Link
                     href={`/meetings/${meeting.id}/edit`}
@@ -46,6 +48,7 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
                     </button>
                 </form>
             </div>
+            )}  
         </article>
     );
 }

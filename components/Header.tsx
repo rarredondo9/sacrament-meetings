@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import NavLinks from './NavLinks';
 import CurrentDate from './CurrentDate';
+import AuthButton from './AuthButton';
 
 export default function Header() {
     return (
@@ -14,6 +15,9 @@ export default function Header() {
                 </div>
                 <Suspense fallback={<div className='h-8' aria-hidden='true' />}>
                     <NavLinks />
+                </Suspense>
+                <Suspense fallback={null}>
+                    <AuthButton />
                 </Suspense>
             </div>
         </header>

@@ -7,7 +7,7 @@ if (!databaseUrl) {
     throw new Error('DatabaseURL is missing. Check your .env.local file.');
 }
 
-const sql = neon(databaseUrl);
+export const sql = neon(databaseUrl);
 
 const ITEMS_PER_PAGE = 5;
 
